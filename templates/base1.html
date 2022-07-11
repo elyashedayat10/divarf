@@ -43,7 +43,13 @@
 
 {% include 'navbar.html' %}
 <div id="main">
+
     {% include 'header.html' %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock content %}
     <!-- begin::footer -->

@@ -1,264 +1,110 @@
-<div class="navigation">
+{% with request.resolver_match.url_name as url_name %}
 
-    <!-- begin::logo -->
-    <div id="logo">
-        <a href="index.html">
-            <img class="logo" src="assets/media/image/logo.png" alt="logo">
-            <img class="logo-sm" src="assets/media/image/logo-sm.png" alt="small logo">
-            <img class="logo-dark" src="assets/media/image/logo-dark.png" alt="dark logo">
-        </a>
-    </div>
-    <!-- end::logo -->
 
-    <!-- begin::navigation header -->
-    <header class="navigation-header">
-        <figure class="avatar avatar-state-success">
-            <img src="assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="image">
-        </figure>
-        <div>
-            <h5>جان اسنو</h5>
-            <p class="text-muted line-height-20 m-b-25">مدیر</p>
-            <ul class="nav">
-                <li class="nav-item">
-                    <a href="profile.html" class="btn nav-link bg-info-bright" title="پروفایل" data-toggle="tooltip">
-                        <i data-feather="user"></i>
+    <div class="navigation">
+
+        <!-- begin::logo -->
+        <div id="logo">
+            <a href="index.html">
+                <img class="logo" src="assets/media/image/logo.png" alt="logo">
+                <img class="logo-sm" src="assets/media/image/logo-sm.png" alt="small logo">
+                <img class="logo-dark" src="assets/media/image/logo-dark.png" alt="dark logo">
+            </a>
+        </div>
+        <!-- end::logo -->
+
+        <!-- begin::navigation header -->
+        <header class="navigation-header">
+            <figure class="avatar avatar-state-success">
+                <img src="assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="image">
+            </figure>
+            <div>
+                <h5>جان اسنو</h5>
+                <p class="text-muted line-height-20 m-b-25">مدیر</p>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="profile.html" class="btn nav-link bg-info-bright" title="پروفایل"
+                           data-toggle="tooltip">
+                            <i data-feather="user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="btn nav-link bg-success-bright" title="تنظیمات" data-toggle="tooltip">
+                            <i data-feather="settings"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url "accounts:logout" %}" class="btn nav-link bg-danger-bright" title="خروج"
+                           data-toggle="tooltip">
+                            <i data-feather="log-out"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <!-- end::navigation header -->
+
+        <!-- begin::navigation menu -->
+        <div class="navigation-menu-body">
+            <ul>
+                <li class="navigation-divider">اصلی</li>
+
+                <li>
+                    <a  class="{% if url_name == 'panel' %}active{% endif %}" href="{% url "config:panel" %}">
+                        <i class="nav-link-icon" data-feather="bar-chart-2"></i>
+                        <span>داشبورد</span>
+                        <span class="badge badge-danger">2</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="btn nav-link bg-success-bright" title="تنظیمات" data-toggle="tooltip">
-                        <i data-feather="settings"></i>
+                <li>
+                    <a  class="{% if url_name == 'list' %}active{% endif %}" href="{% url "want_ad:list" %}">
+                        <i class="nav-link-icon" data-feather="mail"></i>
+                        <span>لیست  آگهی ها</span>
+                        <span class="badge badge-success">2</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{% url "accounts:logout" %}" class="btn nav-link bg-danger-bright" title="خروج"
-                       data-toggle="tooltip">
-                        <i data-feather="log-out"></i>
+                <li class="{% if request.resolver_match.app_name == 'category' %}open{% endif %}">
+                    <a href="">
+                        <i class="nav-link-icon" data-feather="bar-chart-2"></i>
+                        <span>دسته بندی ها</span>
+                    </a>
+                    <ul>
+                        <li><a class="{% if url_name == 'parent' %}active{% endif %}"
+                               href="{% url "category:parent" %}">لیست دسته بندی ها</a></li>
+                        <li><a class="{% if url_name == 'create' %}active{% endif %}"
+                               href="{% url "category:create" %}">افزودن</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a  class="{% if url_name == 'not_confirmed' %}active{% endif %}" href="{% url "want_ad:not_confirmed" %}">
+                        <i class="nav-link-icon" data-feather="mail"></i>
+                        <span>مدیریت آگهی ها</span>
+                        <span class="badge badge-success">2</span>
+                    </a>
+                </li>
+
+                <li class="{% if request.resolver_match.app_name == 'accounts' %}open{% endif %}">
+                    <a href="">
+                        <i class="nav-link-icon" data-feather="bar-chart-2"></i>
+                        <span>مدیریت ادمین ها</span>
+                    </a>
+                    <ul>
+                        <li><a class="{% if url_name == 'admin_list' %}active{% endif %}"
+                               href="{% url "accounts:admin_list" %}">لیست ادمین ها</a></li>
+                        <li><a class="{% if url_name == 'admin_create' %}active{% endif %}"
+                               href="{% url "accounts:admin_create" %}">افزودن</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="{% if url_name == 'static' %}active{% endif %}"  href="{% url "config:static" %}">
+                        <i class="nav-link-icon" data-feather="check-circle"></i>
+                        <span>اطلاعات جامع</span>
+                        <span class="badge badge-warning">2</span>
                     </a>
                 </li>
             </ul>
         </div>
-    </header>
-    <!-- end::navigation header -->
+        <!-- end::navigation menu -->
 
-    <!-- begin::navigation menu -->
-    <div class="navigation-menu-body">
-        <ul>
-            <li class="navigation-divider">اصلی</li>
-            <li class="open">
-                <a href="{% url "config:panel" %}">
-                    <i class="nav-link-icon" data-feather="bar-chart-2"></i>
-                    <span>داشبورد</span>
-                </a>
-                <ul>
-                    <li><a class="active" href="index.html">داشبورد 1</a></li>
-                    <li><a href="dashboard-two.html">داشبورد 2</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="{% url "config:panel" %}">
-                    <i class="nav-link-icon" data-feather="bar-chart-2"></i>
-                    <span>گفتگو</span>
-                    <span class="badge badge-danger">2</span>
-                </a>
-            </li>
-            <li>
-                <a href="inbox.html">
-                    <i class="nav-link-icon" data-feather="mail"></i>
-                    <span>ایمیل</span>
-                    <span class="badge badge-success">2</span>
-                </a>
-            </li>
-            <li>
-                <a href="app-todo.html">
-                    <i class="nav-link-icon" data-feather="check-circle"></i>
-                    <span>برای انجام</span>
-                    <span class="badge badge-warning">2</span>
-                </a>
-            </li>
-            <li>
-                <a href="file-manager.html">
-                    <i class="nav-link-icon" data-feather="file"></i>
-                    <span>مدیریت فایل</span>
-                </a>
-            </li>
-            <li>
-                <a href="calendar.html">
-                    <i class="nav-link-icon" data-feather="calendar"></i>
-                    <span>تقویم</span>
-                </a>
-            </li>
-            <li class="navigation-divider">رابط کاربری</li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="monitor"></i>
-                    <span>اجزاء</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="#">پایه</a>
-                        <ul>
-                            <li><a href="alerts.html">هشدار</a></li>
-                            <li><a href="accordion.html">باز و بسته شونده</a></li>
-                            <li><a href="buttons.html">دکمه ها</a></li>
-                            <li><a href="dropdown.html">منوی کشویی</a></li>
-                            <li><a href="list-group.html">گروه لیست</a></li>
-                            <li><a href="pagination.html">صفحه‌بندی</a></li>
-                            <li><a href="typography.html">تایپوگرافی</a></li>
-                            <li><a href="media-object.html">رسانه</a></li>
-                            <li><a href="progress.html">پیشرفت</a></li>
-                            <li><a href="modal.html">مودال</a></li>
-                            <li><a href="spinners.html">چرخنده ها</a></li>
-                            <li><a href="navs.html">ناوبری ها</a></li>
-                            <li><a href="tab.html">تب</a></li>
-                            <li><a href="tooltip.html">راهنما (تولتیپ)</a></li>
-                            <li><a href="popovers.html">پاپ اور</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">کارت ها</a>
-                        <ul>
-                            <li><a href="basic-cards.html">کارت های پایه </a></li>
-                            <li><a href="image-cards.html">کارت های تصویری </a></li>
-                            <li><a href="card-scroll.html">کارت های اسکرول دار </a></li>
-                            <li><a href="other-cards.html">سایر </a></li>
-                        </ul>
-                    </li>
-                    <li><a href="avatar.html">آواتار</a></li>
-                    <li><a href="icons.html">آیکن‌ها</a></li>
-                    <li><a href="colors.html">رنگ ها</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="globe"></i>
-                    <span>پلاگین ها</span>
-                </a>
-                <ul>
-                    <li><a href="sweet-alert.html">هشدار Sweet</a></li>
-                    <li><a href="lightbox.html">لایت باکس</a></li>
-                    <li><a href="toast.html">توست</a></li>
-                    <li><a href="tour.html">تور</a></li>
-                    <li><a href="slick-slide.html">اسلاید Slick</a></li>
-                    <li><a href="nestable.html">لیست تو در تو</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="mouse-pointer"></i>
-                    <span>فرم ها</span>
-                </a>
-                <ul>
-                    <li><a href="basic-form.html">طرح های فرم</a></li>
-                    <li><a href="custom-form.html">فرم های سفارشی</a></li>
-                    <li><a href="advanced-form.html">فرم پیشرفته</a></li>
-                    <li><a href="form-validation.html">اعتبارسنجی</a></li>
-                    <li><a href="form-wizard.html">مرحله ای</a></li>
-                    <li><a href="file-upload.html">آپلود فایل</a></li>
-                    <li><a href="datepicker.html">انتخاب گر تاریخ</a></li>
-                    <li><a href="timepicker.html">انتخاب گر زمان</a></li>
-                    <li><a href="colorpicker.html">انتخاب گر رنگ</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="grid"></i>
-                    <span>جدول‌ها</span>
-                </a>
-                <ul>
-                    <li><a href="tables.html">جدول‌های پایه</a></li>
-                    <li><a href="data-table.html">جدول اطلاعات</a></li>
-                    <li><a href="responsive-table.html">جدول‌های واکنشگرا</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="pie-chart"></i>
-                    <span>نمودار ها</span>
-                </a>
-                <ul>
-                    <li><a href="apexchart.html">Apex</a></li>
-                    <li><a href="chartjs.html">Chartjs</a></li>
-                    <li><a href="justgage.html">Justgage</a></li>
-                    <li><a href="morsis.html">Morsis</a></li>
-                    <li><a href="peity.html">Peity</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="map-pin"></i>
-                    <span>نقشه ها</span>
-                </a>
-                <ul>
-                    <li><a href="google-map.html">گوگل</a></li>
-                    <li><a href="vector-map.html">وکتور</a></li>
-                </ul>
-            </li>
-            <li class="navigation-divider">متفرقه</li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="user"></i>
-                    <span>احراز هویت</span>
-                </a>
-                <ul>
-                    <li><a href="login.html">ورود</a></li>
-                    <li><a href="register.html">ثبت نام</a></li>
-                    <li><a href="recover-password.html">بازیابی رمز عبور</a></li>
-                    <li><a href="lock-screen.html">قفل صفحه</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="copy"></i>
-                    <span>صفحات</span>
-                </a>
-                <ul>
-                    <li><a href="profile.html">پروفایل</a></li>
-                    <li><a href="timeline.html">خط زمانی</a></li>
-                    <li><a href="invoice.html">صورتحساب</a></li>
-
-                    <li><a href="pricing-table.html">جدول قیمت ها</a></li>
-                    <li><a href="search-result.html">نتایج جستجو</a></li>
-                    <li>
-                        <a href="#">صفحات خطا</a>
-                        <ul>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="404-2.html">404 نسخه 2</a></li>
-                            <li><a href="503.html">503</a></li>
-                            <li><a href="mean-at-work.html">تعمیرات</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="blank-page.html">صفحه شروع</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="send"></i>
-                    <span>قالب های ایمیل</span>
-                </a>
-                <ul>
-                    <li><a href="email-template-basic.html">پایه</a></li>
-                    <li><a href="email-template-alert.html">هشدار</a></li>
-                    <li><a href="email-template-billing.html">صورتحساب</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="nav-link-icon" data-feather="menu"></i>
-                    <span>سطح منو</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="#">سطح منو</a>
-                        <ul>
-                            <li>
-                                <a href="#">سطح منو </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
     </div>
-    <!-- end::navigation menu -->
-
-</div>
+{% endwith %}

@@ -13,6 +13,7 @@ class Category(MPTTModel):
         null=True,
         related_name="children",
     )
+    paid = models.BooleanField(default=False)
 
     class MPTTMeta:
         order_insertion_by = ("name",)

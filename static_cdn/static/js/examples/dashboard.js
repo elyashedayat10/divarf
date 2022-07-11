@@ -62,63 +62,7 @@ $(document).ready(function () {
         });
     }
 
-    if ($('.reportrange').length > 0) {
-        var start = moment().subtract(29, 'days');
-        var end = moment();
 
-		function cb(start, end) {
-			$('.reportrange .text').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-		}
-
-		$('.reportrange').daterangepicker({
-			startDate: start,
-			endDate: end,
-			ranges: {
-				'امروز': [moment(), moment()],
-				'دیروز': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'7 روز اخیر': [moment().subtract(6, 'days'), moment()],
-				'30 روز اخیر': [moment().subtract(29, 'days'), moment()],
-				'این ماه': [moment().startOf('month'), moment().endOf('month')],
-				'ماه گذشته': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-			},
-			"locale": {
-				"format": "YYYY/MM/DD",
-				"separator": " - ",
-				"applyLabel": "اعمال",
-				"cancelLabel": "انصراف",
-				"fromLabel": "از",
-				"toLabel": "تا",
-				"customRangeLabel": "سفارشی",
-				"weekLabel": "هف",
-				"daysOfWeek": [
-					"ی",
-					"د",
-					"س",
-					"چ",
-					"پ",
-					"ج",
-					"ش"
-				],
-				"monthNames": [
-					"ژانویه",
-					"فوریه",
-					"مارس",
-					"آوریل",
-					"می",
-					"ژوئن",
-					"جولای",
-					"آگوست",
-					"سپتامبر",
-					"اکتبر",
-					"نوامبر",
-					"دسامبر"
-				],
-				"firstDay": 6
-			}
-		}, cb);
-
-        cb(start, end);
-    }
 
     var chartColors = {
         primary: {

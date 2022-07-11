@@ -10,7 +10,6 @@ from utils.mixins import AdminAccessMixin
 from .forms import CategoryForm
 from .models import Category
 
-
 # Create your views here.
 
 
@@ -23,7 +22,7 @@ class CategoryCreateView(AdminAccessMixin, SuccessMessageMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = "category/create.html"
-    success_url = reverse_lazy('category:parent')
+    success_url = reverse_lazy("category:parent")
     success_message = "دسته یندی با موفقیت اضافه شذ"
 
     def form_invalid(self, form):
@@ -35,7 +34,7 @@ class CategoryUpdateView(AdminAccessMixin, SuccessMessageMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = "category/update.html"
-    success_url = reverse_lazy('category:parent')
+    success_url = reverse_lazy("category:parent")
     success_message = ""
 
     def form_invalid(self, form):

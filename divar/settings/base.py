@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "braces",
+    "django_filters",
+    'widget_tweaks',
+
     # custom
     "categories.apps.CategoriesConfig",
     "wantads.apps.WantadsConfig",
@@ -133,6 +136,9 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 1,
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'wantads.api.views.JSONResponseRenderer',
+    # )
 }
 
 AUTH_USER_MODEL = "accounts.User"

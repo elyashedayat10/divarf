@@ -10,7 +10,7 @@ from .views import (
     ParentCategoryListView,
 )
 
-app_name = 'category'
+app_name = "category"
 urlpatterns = [
     path("", ParentCategoryListView.as_view(), name="parent"),
     path("<int:pk>/", CategoryDetailView.as_view(), name="detail"),

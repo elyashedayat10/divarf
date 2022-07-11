@@ -1,0 +1,67 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <!-- begin::main-content -->
+    <main class="main-content">
+
+        <div class="container">
+
+            <!-- begin::page-header -->
+            <div class="page-header">
+                <h4>آگهی شماره {{ want_ad.pk }}</h4>
+                <nav aria-label="breadcrumb">
+                    <input
+                            action="action"
+                            onclick="window.history.go(-1); return false;"
+                            type="submit"
+                            value="بازگشت به صفحه قبل"
+                            class="btn btn-danger"
+                    />
+                </nav>
+            </div>
+
+
+            <!-- end::page-header -->
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="card-title text-center">{{ want_ad.title }}</h1>
+                                <ul>
+                                    <li>ثبت کنند:{{ want_ad.user.phone_number }}</li>
+                                    <li>تاریخ ثبت:{{ want_ad.created }}</li>
+                                    <li>دسته بندی:{{ want_ad.category.name }}</li>
+                                    <li>شهز:{{ want_ad.city }}</li>
+                                    <li>منطقه:{{ want_ad.zone }}</li>
+                                </ul>
+                                <p class="card-text">{{ want_ad.description |linebreaksbr }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ want_ad.created }}</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="text-center text-info">تصاویر آگهی</h1>
+                    <div class="card-columns">
+                        {% for image in want_ad.images.all %}
+                            <div class="card">
+                                <img width="50px" height="150px" src="{{ image.image.url }}" class="card-img-top"
+                                     alt="image">
+                            </div>
+                        {% empty %}
+                            <h1 class="text-center">برای این آگهی هیچ عکسی ثبت نشده</h1>
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    <!-- end::main-content -->
+{% endblock content %}

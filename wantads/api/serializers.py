@@ -1,4 +1,6 @@
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from categories.api.serializers import CategorySerializer
 
@@ -9,6 +11,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ("id", "image")
+        read_only_fields = ("id",)
 
 
 class WandAdSerializers(serializers.ModelSerializer):
@@ -62,3 +65,36 @@ class BookmarkSerializer(serializers.ModelSerializer):
         model = Bookmark
         fields = ("user", "want")
         read_only_fields = ("user",)
+
+
+class WandAdCreateSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = WantAd
+        fields = (
+            "id",
+            "title",
+            "description",
+            "active_chat",
+            "category",
+            "city",
+            "zone",
+            "lat",
+            "long",
+            "show_phone",
+            "data",
+            "name",
+        )
+        read_only_fields = ("id",)
+
+    def create(self, validated_data):
+        foo = Foo.objects.create(
+            uploaded_by=self.context["request"].user, **validated_data
+        )
+        return foo
+
+    def create(self, validated_data):
+        tracks_data = validated_data.pop("tracks")
+        album = Album.objects.create(**validated_data)
+        for track_data in tracks_data:
+            Track.objects.create(album=album, **track_data)
+        return album

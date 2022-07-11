@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
@@ -6,23 +7,50 @@ from rest_framework.response import Response
 from categories.api.serializers import CategorySerializer
 from categories.models import Category
 
-from ..models import Bookmark, Note, Viewed, WantAd
-from .serializers import BookmarkSerializer, NoteSerializer, WandAdSerializers
+from ..models import Bookmark, Image, Note, Viewed, WantAd
+from .serializers import (
+    BookmarkSerializer,
+    NoteSerializer,
+    WandAdCreateSerializers,
+    WandAdSerializers,
+)
+
+user = get_user_model()
+
+from rest_framework.renderers import JSONRenderer
+from rest_framework.utils import json
+
+
+class JSONResponseRenderer(JSONRenderer):
+    # media_type = 'text/plain'
+    # media_type = 'application/json'
+    charset = "utf-8"
+
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        response_dict = {
+            "status": "failure",
+            "data": data,
+            "message": "",
+        }
+        data = response_dict
+        return json.dumps(data)
 
 
 class HomeApiView(generics.GenericAPIView):
-    def get(self, request, *args, **kwargs):
-        # try:
-        queryset = WantAd.objects.all()
-        serializer = WandAdSerializers(
-            instance=queryset, many=True, context={"request": request}
-        )
-        context = {
-            "is_done": True,
-            "message": "لیست تمام محصولان",
-            "data": serializer.data,
-        }
-        return Response(data=context, status=status.HTTP_200_OK)
+    queryset = WantAd.objects.all()
+    serializer_class = WandAdSerializers
+    renderer_classes = [JSONResponseRenderer]
+    # def get(self, request, *args, **kwargs):
+    # try:
+    # serializer = WandAdSerializers(
+    #     instance=queryset, many=True, context={"request": request}
+    # )
+    # context = {
+    #     "is_done": True,
+    #     "message": "لیست تمام محصولان",
+    #     "data": serializer.data,
+    # }
+    # return Response(data=context, status=status.HTTP_200_OK)
 
     #     # except:
     #
@@ -179,3 +207,35 @@ class ViewedApiView(generics.GenericAPIView):
             "data": serializer,
         }
         return Response(data=context, status=status.HTTP_200_OK)
+
+
+from rest_framework.permissions import AllowAny
+
+from .serializers import ImageSerializer
+
+
+class WantCreateApiView(generics.GenericAPIView):
+    serializer_class = WandAdCreateSerializers
+
+    # permission_classes = [AllowAny,]
+
+    def post(self, request, *args, **kwargs):
+        global want_id
+        serializer = WandAdCreateSerializers(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            want_id = serializer.save(user=request.user, confirmed=True)
+            # image_serializer = ImageSerializer(data=request.FILES, many=True)
+            # if serializer.is_valid(raise_exception=True):
+            #     image_serializer.save(want=want_id)
+            context = {
+                "is_done": True,
+                "message": "با موفقیا ساخته شد ",
+                "data": serializer.data,
+            }
+            return Response(data=context, status=status.HTTP_201_CREATED)
+        context = {
+            "is_done": False,
+            "message": "خطا ",
+            "data": serializer.errorse,
+        }
+        return Response(data=context, status=status.HTTP_400_BAD_REQUEST)

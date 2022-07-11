@@ -15,12 +15,16 @@ class CategorySerializer(serializers.ModelSerializer):
             "children",
         )
 
-    def get_children(self, obj):
-        return CategorySerializer(obj.children.all(), many=True).data
+    # def get_children(self, obj):
+    #     return CategorySerializer(obj.children.all(), many=True).data
 
     # def get_children(self, obj):
     #     return CategorySerializer(obj.get_ancestors(ascending=False, include_self=False), many=True).data
     #
+
+    def get_children(self, obj):
+        return CategorySerializer(obj.get_children(), many=True).data
+
     # def get_children(self, obj):
     #     return CategorySerializer(obj.get_descendants(include_self=False), many=True).data
     # def get_children(self, obj):

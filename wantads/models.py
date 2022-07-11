@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django_jalali.db import models as jmodels
-
+from django.urls import reverse
 from categories.models import Category
 from utils.models import BaseModel
 
@@ -44,6 +44,13 @@ class WantAd(BaseModel):
 
     def __str__(self):
         return f"{self.user} اگهی {self.title} را در تاریخ {self.created} ثبت کرده "
+
+    def get_absolute_url(self):
+        return reverse('want_ad:detail', args=[self.pk])
+
+    @property
+    def logo(self):
+        return self.images.first()
 
 
 class Image(BaseModel):

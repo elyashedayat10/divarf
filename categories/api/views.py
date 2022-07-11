@@ -12,7 +12,7 @@ class CategoryApiView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         # try:
         # category_list = Category.objects.filter(parent=None)
-        category_list = Category.objects.all()
+        category_list = Category.objects.filter(parent=None)
         serializer = self.serializer_class(category_list, many=True)
         context = {
             "is_done": True,

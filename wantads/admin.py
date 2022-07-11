@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Bookmark, Viewed, WantAd
+from .models import Bookmark, Image, Viewed, WantAd
 
 
 # Register your models here.
@@ -14,3 +14,4 @@ class WantAdAdmin(admin.ModelAdmin):
 
 admin.site.register(Viewed)
 admin.site.register(Bookmark)
+admin.site.register(Image)

@@ -38,22 +38,28 @@ class ChangeForm(forms.ModelForm):
         fields = ("phone_number",)
 
 
-class AuthForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ("phone_number", "password")
-        labels = {
-            "phone_number": "نام کاربری",
-            "password": "رمز عبور",
-        }
-        widgets = {
-            "phone_number": forms.TextInput(
-                attrs={"placeholder": "", "class": "form-control text-left"}
-            ),
-            "password": forms.PasswordInput(
-                attrs={"placeholder": "رمز عبوز", "class": "form-control text-left"}
-            ),
-        }
+class AuthForm(forms.Form):
+    phone_number = forms.CharField(label='نام کاربری',
+                                   widget=forms.TextInput(attrs={"placeholder": "", "class": "form-control text-left"}))
+
+    password = forms.CharField(label='رمز عبوز', widget=forms.PasswordInput(
+        attrs={"placeholder": "رمز عبور", "class": "form-control text-left"}))
+
+    # class Meta:
+    #     model = User
+    #     fields = ("phone_number", "password")
+    #     labels = {
+    #         "phone_number": "نام کاربری",
+    #         "password": "رمز عبور",
+    #     }
+    #     widgets = {
+    #         "phone_number": forms.TextInput(
+    #             attrs={"placeholder": "", "class": "form-control text-left"}
+    #         ),
+    #         "password": forms.PasswordInput(
+    #             attrs={"placeholder": "رمز عبوز", "class": "form-control text-left"}
+    #         ),
+    #     }
 
 
 class AdminPasswordChangeForm(PasswordChangeForm):
