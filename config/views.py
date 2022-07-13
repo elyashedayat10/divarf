@@ -1,12 +1,12 @@
+import jdatetime
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
-import jdatetime
+from django.views.generic import ListView, TemplateView, View
+
 from categories.models import Category
-from wantads.models import WantAd
-from django.db.models import Count
 from utils.mixins import AdminAccessMixin
+from wantads.models import WantAd
 
 # Create your views here.
 user = get_user_model()
@@ -36,15 +36,19 @@ class PanelView(AdminAccessMixin, View):
 
 class StaticView(AdminAccessMixin, View):
     def get(self, request, *args, **kwargs):
+        category = Category.objects.all()
         want_ad = WantAd.objects.all()
         today_want_ad = want_ad.filter(created=jdatetime.date.today())
         not_confirmed = today_want_ad.filter(confirmed=False).count()
-        month_want_ad = want_ad.filter(created__month=jdatetime.date.today().month)
+        month_want_ad = want_ad.filter(created__month=jdatetime.date.today().month).count()
         year_want_ad = want_ad.filter(created__year=jdatetime.date.today().year).count()
         special_want = want_ad.filter(special=True).count()
         top_city = want_ad.annotate(top_city=Count('city')).order_by('-top_city').first()
+        top_date = want_ad.annotate(top_date=Count('created')).order_by('-created').first()
         top_zone = want_ad.annotate(top_zone=Count('zone')).order_by('-top_zone').first()
         paid = want_ad.filter(category__paid=True).count()
+        parent_category = category.filter(parent=None).count()
+        child_category = category.count() - parent_category
         context = {
             'today_want_ad': today_want_ad.count(),
             'month_want_ad': month_want_ad,
@@ -54,5 +58,12 @@ class StaticView(AdminAccessMixin, View):
             'top_zone': top_zone,
             'paid': paid,
             'not_confirmed': not_confirmed,
+            'category_count': category.count(),
+            'parent_category': parent_category,
+            'child_category': child_category,
+            'top_date': top_date,
         }
         return render(request, "config/static.html", context)
+
+
+

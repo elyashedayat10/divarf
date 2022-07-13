@@ -47,8 +47,10 @@
                     <div class="card-columns">
                         {% for image in want_ad.images.all %}
                             <div class="card">
-                                <img width="50px" height="150px" src="{{ image.image.url }}" class="card-img-top"
-                                     alt="image">
+                                <a href="{{ image.image.url }}">
+                                    <img width="50px" height="150px" src="{{ image.image.url }}" class="card-img-top"
+                                         alt="image">
+                                </a>
                             </div>
                         {% empty %}
                             <h1 class="text-center">برای این آگهی هیچ عکسی ثبت نشده</h1>

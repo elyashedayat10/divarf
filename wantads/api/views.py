@@ -1,9 +1,11 @@
+import requests
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 from categories.api.serializers import CategorySerializer
 from categories.models import Category
 
@@ -37,28 +39,21 @@ class JSONResponseRenderer(JSONRenderer):
 
 
 class HomeApiView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated, ]
     queryset = WantAd.objects.all()
     serializer_class = WandAdSerializers
-    renderer_classes = [JSONResponseRenderer]
-    # def get(self, request, *args, **kwargs):
-    # try:
-    # serializer = WandAdSerializers(
-    #     instance=queryset, many=True, context={"request": request}
-    # )
-    # context = {
-    #     "is_done": True,
-    #     "message": "لیست تمام محصولان",
-    #     "data": serializer.data,
-    # }
-    # return Response(data=context, status=status.HTTP_200_OK)
 
-    #     # except:
-    #
-    #     contex = {
-    #     'is_done': False,
-    #     'message': 'خطا در انجام عملیات'
-    #     }
-    # return Response(data=contex, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(city__iexact=request.query_params.get("city", 'تهران'))
+        serializer = WandAdSerializers(
+            instance=queryset, many=True, context={"request": request}
+        )
+        context = {
+            "is_done": True,
+            "message": "لیست تمام محصولان",
+            "data": serializer.data,
+        }
+        return Response(data=context, status=status.HTTP_200_OK)
 
 
 class CategoryWantAdApiView(generics.GenericAPIView):
@@ -127,6 +122,7 @@ class WantAdRetrieveAPIView(generics.GenericAPIView):
 class BookmarkApiView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         bookmark_list = request.user.wantads_bookmark.all()
+        print(bookmark_list)
         want_list = WantAd.objects.filter(id__in=bookmark_list)
         serializer = WandAdSerializers(
             instance=want_list, many=True, context={"request": request}
@@ -140,20 +136,21 @@ class BookmarkApiView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = BookmarkSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+        try:
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(user=request.user)
+                context = {
+                    "is_done": True,
+                    "message": "با موفقیت به bookmark ها اضافه شد",
+                    "data": serializer.data,
+                }
+                return Response(data=context, status=status.HTTP_200_OK)
+        except:
             context = {
-                "is_done": True,
-                "message": "با موفقیت به bookmark ها اضافه شد",
-                "data": serializer.data,
+                "is_done": False,
+                "message": "خطا در انجام عملیات",
             }
-            return Response(data=context, status=status.HTTP_200_OK)
-        context = {
-            "is_done": False,
-            "message": "خطا در انجام عملیات",
-            "data": serializer.errors,
-        }
-        return Response(data=context, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=context, status=status.HTTP_400_BAD_REQUEST)
 
 
 class NoteApiView(generics.GenericAPIView):
@@ -213,6 +210,8 @@ from rest_framework.permissions import AllowAny
 
 from .serializers import ImageSerializer
 
+import json
+
 
 class WantCreateApiView(generics.GenericAPIView):
     serializer_class = WandAdCreateSerializers
@@ -220,13 +219,30 @@ class WantCreateApiView(generics.GenericAPIView):
     # permission_classes = [AllowAny,]
 
     def post(self, request, *args, **kwargs):
-        global want_id
-        serializer = WandAdCreateSerializers(data=request.data)
+        serializer = WandAdCreateSerializers(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
-            want_id = serializer.save(user=request.user, confirmed=True)
-            # image_serializer = ImageSerializer(data=request.FILES, many=True)
-            # if serializer.is_valid(raise_exception=True):
-            #     image_serializer.save(want=want_id)
+            serializer.save(confirmed=True)
+            context = {
+                "is_done": True,
+                "message": "با موفقیا ساخته شد ",
+                # "data": serializer,
+            }
+            return Response(data=context, status=status.HTTP_201_CREATED)
+        context = {
+            "is_done": False,
+            "message": "خطا ",
+            "data": serializer.errorse,
+        }
+        return Response(data=context, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ImageUploadApiView(generics.GenericAPIView):
+    serializer_class = ImageSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, many=True)
+        if serializer.is_valid(raise_exception=True):
+            Image.objects.create(image=serializer.validated_data['image'], want=serializer.validated_data['want'])
             context = {
                 "is_done": True,
                 "message": "با موفقیا ساخته شد ",
@@ -238,4 +254,78 @@ class WantCreateApiView(generics.GenericAPIView):
             "message": "خطا ",
             "data": serializer.errorse,
         }
-        return Response(data=context, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data=context, status=status.HTTP_200_OK)
+
+
+MERCHANT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
+description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
+CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
+
+from rest_framework.permissions import IsAuthenticated
+
+
+class WantAdPayView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        want_id = kwargs.get('id')
+        want_ad = WantAd.objects.get(id=want_id)
+        req_data = {
+            "merchant_id": MERCHANT,
+            "amount": want_ad.cost,
+            "callback_url": CallbackURL,
+            "description": description,
+            "metadata": {"mobile": request.user.phone_numberl}
+        }
+        req_header = {"accept": "application/json",
+                      "content-type": "application/json'"}
+        req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
+            req_data), headers=req_header)
+        authority = req.json()['data']['authority']
+        if len(req.json()['errors']) == 0:
+            return redirect(ZP_API_STARTPAY.format(authority=authority))
+        else:
+            e_code = req.json()['errors']['code']
+            e_message = req.json()['errors']['message']
+            return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+
+
+class OrderVerifyView(generics.GenericAPIView):
+    def get(self, request):
+        want_ad = WantAd.objects.get(id=1)
+        t_status = request.GET.get('Status')
+        t_authority = request.GET['Authority']
+        if request.GET.get('Status') == 'OK':
+            req_header = {"accept": "application/json",
+                          "content-type": "application/json'"}
+            req_data = {
+                "merchant_id": MERCHANT,
+                "amount": want_ad.cost,
+                "authority": t_authority
+            }
+            req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
+            if len(req.json()['errors']) == 0:
+                t_status = req.json()['data']['code']
+                if t_status == 100:
+                    want_ad.confirm = True
+                    want_ad.save()
+                    return HttpResponse('Transaction success.\nRefID: ' + str(
+                        req.json()['data']['ref_id']
+                    ))
+                elif t_status == 101:
+                    return HttpResponse('Transaction submitted : ' + str(
+                        req.json()['data']['message']
+                    ))
+                else:
+                    return HttpResponse('Transaction failed.\nStatus: ' + str(
+                        req.json()['data']['message']
+                    ))
+            else:
+                e_code = req.json()['errors']['code']
+                e_message = req.json()['errors']['message']
+                return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+        else:
+            return HttpResponse('Transaction failed or canceled by user')

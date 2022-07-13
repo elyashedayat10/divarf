@@ -16,104 +16,21 @@
                 <div class="col-md-12">
 
                     <div class="row">
-                        {#                        <div class="col-md-4">#}
-                        {#                            <div class="card">#}
-                        {#                                <div class="card-body">#}
-                        {#                                    <h6 class="card-title d-flex align-items-start justify-content-between mb-0">#}
-                        {#                                        <span>نرخ تبدیل</span>#}
-                        {#                                        <span class="avatar">#}
-                        {#                                            <span class="avatar-title bg-success text-white rounded-circle">#}
-                        {#                                                <i class="fa fa-percent"></i>#}
-                        {#                                            </span>#}
-                        {#                                        </span>#}
-                        {#                                    </h6>#}
-                        {#                                    <div class="d-flex d-sm-block d-lg-flex align-items-end mb-3">#}
-                        {#                                        <h3 class="mb-0 mr-2 line-height-28">0.19%</h3>#}
-                        {#                                        <p class="small text-muted mb-0 line-height-20">#}
-                        {#                                            <span class="text-success" dir="ltr">+ 1.2%</span> از هفته پیش#}
-                        {#                                        </p>#}
-                        {#                                    </div>#}
-                        {#                                    <canvas id="widget-chart1"></canvas>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
-                        {#                        <div class="col-md-4">#}
-                        {#                            <div class="card">#}
-                        {#                                <div class="card-body">#}
-                        {#                                    <h6 class="card-title d-flex align-items-start justify-content-between mb-0">#}
-                        {#                                        <span>خریدهای منحصر به فرد</span>#}
-                        {#                                        <span class="avatar">#}
-                        {#                                            <span class="avatar-title bg-warning text-white rounded-circle">#}
-                        {#                                                <i class="fa fa-dollar"></i>#}
-                        {#                                            </span>#}
-                        {#                                        </span>#}
-                        {#                                    </h6>#}
-                        {#                                    <div class="d-flex d-sm-block d-lg-flex align-items-end mb-3">#}
-                        {#                                        <h3 class="mb-0 mr-2 line-height-28">3,137</h3>#}
-                        {#                                        <p class="small text-muted mb-0 line-height-20">#}
-                        {#                                            <span class="text-danger" dir="ltr">-1.2%</span> از هفته پیش#}
-                        {#                                        </p>#}
-                        {#                                    </div>#}
-                        {#                                    <canvas id="widget-chart2"></canvas>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
-                        {#                        <div class="col-md-4">#}
-                        {#                            <div class="card">#}
-                        {#                                <div class="card-body">#}
-                        {#                                    <h6 class="card-title d-flex align-items-start justify-content-between mb-0">#}
-                        {#                                        <span>تعداد سفارش</span>#}
-                        {#                                        <span class="avatar">#}
-                        {#                                            <span class="avatar-title bg-danger text-white rounded-circle">#}
-                        {#                                                <i class="fa fa-cube"></i>#}
-                        {#                                            </span>#}
-                        {#                                        </span>#}
-                        {#                                    </h6>#}
-                        {#                                    <div class="d-flex d-sm-block d-lg-flex align-items-end mb-3">#}
-                        {#                                        <h3 class="mb-0 mr-2 line-height-28">1,650</h3>#}
-                        {#                                        <p class="small text-muted mb-0 line-height-20">#}
-                        {#                                            <span class="text-success" dir="ltr">+ 2.1%</span> از هفته پیش#}
-                        {#                                        </p>#}
-                        {#                                    </div>#}
-                        {#                                    <canvas id="widget-chart3"></canvas>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
+
                     </div>
 
                     <div class="row">
-                        {#                        <div class="col-md-8">#}
-                        {#                            <div class="card">#}
-                        {#                                <div class="card-body">#}
-                        {#                                    <h6 class="card-title d-flex justify-content-between">#}
-                        {#                                        <span>فروش این ماه</span>#}
-                        {#                                        <span class="dropdown primary-font">#}
-                        {#                                            <a class="pl-2 pr-2" href="#" data-toggle="dropdown" aria-haspopup="true"#}
-                        {#                                               aria-expanded="false">#}
-                        {#                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>#}
-                        {#                                            </a>#}
-                        {#											<span class="dropdown-menu dropdown-menu-right">#}
-                        {#                                                <a href="#" class="dropdown-item">عمل</a>#}
-                        {#                                                <a href="#" class="dropdown-item">عمل دیگر</a>#}
-                        {#                                                <a href="#" class="dropdown-item">یک عمل دیگر</a>#}
-                        {#                                            </span>#}
-                        {#                                        </span>#}
-                        {#                                    </h6>#}
-                        {#                                    <div id="chart1"></div>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-2">کل مشتریان</h6>
+                                    <h6 class="card-title mb-md-4 mb-lg-2">آگهی های امروز</h6>
                                     <div class="text-center">
                                         <div class="mb-2">
                                             <span class="bar-1">2,5,9,6,5,2,4,3,7,5</span>
                                         </div>
-                                        <div class="font-size-30 mb-1 font-weight-bold text-primary">{{ user_count | intcomma }}</div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-primary">{{ today_want_ad | intcomma }}</div>
                                         <p class="mb-0 text-muted">
-                                            <i class="text-primary m-r-5"></i>نفر
+                                            <i class="text-primary m-r-5"></i>عدد
                                         </p>
                                     </div>
                                 </div>
@@ -122,47 +39,14 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-3">تعداد آگهی فعال</h6>
-                                    <div class="text-center">
-                                        <div class="mb-2">
-                                            <span class="bar-3">2,5,9,6,5,2,4,3,7,5</span>
-                                        </div>
-                                        <div class="font-size-30 mb-1 font-weight-bold text-success">{{ want_count | intcomma }}</div>
-                                        <p class="mb-0 text-muted">
-                                            <i class="text-danger m-r-5"></i> عدد
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-3">تعداد دسته بندی</h6>
-                                    <div class="text-center">
-                                        <div class="mb-2">
-                                            <span class="bar-4">2,5,9,6,5,2,4,3,7,5</span>
-                                        </div>
-                                        <div class="font-size-30 mb-1 font-weight-bold text-danger">{{ category_count | intcomma }}</div>
-                                        <p class="mb-0 text-muted">
-                                            <i class="text-danger m-r-5"></i> عدد
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-3">کاربران ادمین</h6>
+                                    <h6 class="card-title mb-md-4 mb-lg-2">آگهی های ماه</h6>
                                     <div class="text-center">
                                         <div class="mb-2">
                                             <span class="bar-1">2,5,9,6,5,2,4,3,7,5</span>
                                         </div>
-                                        <div class="font-size-30 mb-1 font-weight-bold text-primary">{{ admin_count | intcomma }}</div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-primary">{{ month_want_ad | intcomma }}</div>
                                         <p class="mb-0 text-muted">
-                                            <i class="text-primary m-r-5"></i> عدد
+                                            <i class="text-primary m-r-5"></i>عدد
                                         </p>
                                     </div>
                                 </div>
@@ -171,14 +55,30 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-3">اگهی تایید نشده</h6>
+                                    <h6 class="card-title mb-md-4 mb-lg-2">آگهی های سال</h6>
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <span class="bar-1">2,5,9,6,5,2,4,3,7,5</span>
+                                        </div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-primary">{{ year_want_ad | intcomma }}</div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="text-primary m-r-5"></i>عدد
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-md-4 mb-lg-3">دسته بندی ها</h6>
                                     <div class="text-center">
                                         <div class="mb-2">
                                             <span class="bar-3">2,5,9,6,5,2,4,3,7,5</span>
                                         </div>
                                         <div class="font-size-30 mb-1 font-weight-bold text-success">{{ category_count | intcomma }}</div>
                                         <p class="mb-0 text-muted">
-                                            <i class="text-success m-r-5"></i> عدد
+                                            <i class="text-danger m-r-5"></i> عدد
                                         </p>
                                     </div>
                                 </div>
@@ -187,12 +87,28 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title mb-md-4 mb-lg-3">بیشترین اگهی در دسته:{{ max_want }}</h6>
+                                    <h6 class="card-title mb-md-4 mb-lg-3">دسته های اصلی</h6>
                                     <div class="text-center">
                                         <div class="mb-2">
-                                            <span class="bar-4">2,5,9,6,5,2,4,3,7,5</span>
+                                            <span class="bar-3">2,5,9,6,5,2,4,3,7,5</span>
                                         </div>
-                                        <div class="font-size-30 mb-1 font-weight-bold text-danger">{{ max_Want.want_count | intcomma }}</div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-success">{{ parent_category | intcomma }}</div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="text-danger m-r-5"></i> عدد
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-md-4 mb-lg-3">زیر دسته ها</h6>
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <span class="bar-3">2,5,9,6,5,2,4,3,7,5</span>
+                                        </div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-success">{{ child_category | intcomma }}</div>
                                         <p class="mb-0 text-muted">
                                             <i class="text-danger m-r-5"></i> عدد
                                         </p>
@@ -201,8 +117,59 @@
                             </div>
                         </div>
 
-                    </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-md-4 mb-lg-3">شهر با بیشترین آگهی</h6>
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <span class="bar-4">2,5,9,6,5,2,4,3,7,5</span>
+                                        </div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-danger">{{ top_city.city }}</div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="text-danger m-r-5"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-md-4 mb-lg-3">منطقه با بیشترین آگهی</h6>
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <span class="bar-4">2,5,9,6,5,2,4,3,7,5</span>
+                                        </div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-danger">{{ top_city.zone }}</div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="text-danger m-r-5"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-md-4 mb-lg-3">تاریخ با بیشترین آگهی</h6>
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <span class="bar-4">2,5,9,6,5,2,4,3,7,5</span>
+                                        </div>
+                                        <div class="font-size-30 mb-1 font-weight-bold text-danger">{{ top_date.created }}</div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="text-danger m-r-5"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+
+
+
+                    </div>
 
 
                 </div>

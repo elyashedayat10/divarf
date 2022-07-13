@@ -34,7 +34,7 @@
                                     {% for wantad in wantad_list %}
                                         <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
-                                        <td><img width="100px" height="100px" src="{{ wantad.logo.image.url }}"></td>
+                                        <td><img width="100px" height="100px" src="{{ wantad.logo }}"></td>
                                         <td>{{ wantad.title }}</td>
                                         <td>{{ wantad.category }}</td>
                                         <td>{{ wantad.created }}</td>

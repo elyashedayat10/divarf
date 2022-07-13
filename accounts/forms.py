@@ -39,11 +39,19 @@ class ChangeForm(forms.ModelForm):
 
 
 class AuthForm(forms.Form):
-    phone_number = forms.CharField(label='نام کاربری',
-                                   widget=forms.TextInput(attrs={"placeholder": "", "class": "form-control text-left"}))
+    phone_number = forms.CharField(
+        label="نام کاربری",
+        widget=forms.TextInput(
+            attrs={"placeholder": "", "class": "form-control text-left"}
+        ),
+    )
 
-    password = forms.CharField(label='رمز عبوز', widget=forms.PasswordInput(
-        attrs={"placeholder": "رمز عبور", "class": "form-control text-left"}))
+    password = forms.CharField(
+        label="رمز عبوز",
+        widget=forms.PasswordInput(
+            attrs={"placeholder": "رمز عبور", "class": "form-control text-left"}
+        ),
+    )
 
     # class Meta:
     #     model = User

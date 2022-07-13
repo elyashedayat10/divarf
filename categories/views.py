@@ -16,6 +16,7 @@ from .models import Category
 class ParentCategoryListView(AdminAccessMixin, ListView):
     queryset = Category.objects.filter(parent=None)
     template_name = "category/list.html"
+    paginate_by = 30
 
 
 class CategoryCreateView(AdminAccessMixin, SuccessMessageMixin, CreateView):
@@ -35,7 +36,7 @@ class CategoryUpdateView(AdminAccessMixin, SuccessMessageMixin, UpdateView):
     form_class = CategoryForm
     template_name = "category/update.html"
     success_url = reverse_lazy("category:parent")
-    success_message = ""
+    success_message = "دسنه بندی با موفقیت به روزرسانی شد"
 
     def form_invalid(self, form):
         messages.error(self.request, "", "danger")
@@ -44,7 +45,7 @@ class CategoryUpdateView(AdminAccessMixin, SuccessMessageMixin, UpdateView):
 
 class CategoryDetailView(AdminAccessMixin, SuccessMessageMixin, DetailView):
     model = Category
-    template_name = ""
+    template_name = "category/detail.html"
 
 
 class CategoryDeleteVIew(AdminAccessMixin, View):
@@ -52,5 +53,5 @@ class CategoryDeleteVIew(AdminAccessMixin, View):
         category_id = kwargs.get("pk")
         category_obj = get_object_or_404(Category, id=category_id)
         category_obj.delete()
-        messages.success(request, "", "success")
-        return redirect("")
+        messages.success(request, "دسته مورد نظر با موفقیت حذف شد", "success")
+        return redirect("category:parent")

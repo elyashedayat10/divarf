@@ -34,7 +34,7 @@ class UserLoginView(AnonymousRequiredMixin, FormView):
             messages.success(self.request, "با موفقیت وارد شدید", "success")
         else:
             messages.error(self.request, "خطا در ورود", "danger")
-            return redirect('accounts:login')
+            return redirect("accounts:login")
         return super(UserLoginView, self).form_valid(form)
 
     def form_invalid(self, form):

@@ -5,7 +5,7 @@
 
             <!-- begin::page-header -->
             <div class="page-header">
-                <h1 class="text-center">لیست دسته بندی ها</h1>
+                <h1 class="text-center">لیست زیر دسته های {{ object }}</h1>
             </div>
             <!-- end::page-header -->
 
@@ -29,7 +29,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for category in category_list %}
+                                    {% for category in object.children.all %}
                                         <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{ category.name }}</td>
@@ -41,7 +41,8 @@
                                         <td><a class="btn  btn-danger" href="{% url "category:delete" category.pk %}">حذف</a>
                                         </td>
                                     {% empty %}
-                                        <h1 class="text-center text-danger">تا کنون دسته بندی ثبت نشده</h1>
+                                        <h1 class="text-center text-danger">تا کنون زیر دسته ای برای این دسته تعریف
+                                            نشده</h1>
                                     {% endfor %}
 
                                     </tbody>

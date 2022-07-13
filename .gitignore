@@ -139,5 +139,5 @@ dmypy.json
 cython_debug/
 
 .env
-static_cdn
+static_cdn/
 .idea

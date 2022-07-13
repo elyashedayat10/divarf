@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-
+from django.db.models import Count, F
 from ..models import OtpCode
 from ..utils import send_otp
 from .serializers import PhoneSerializer, VerifySerializer
@@ -83,3 +83,34 @@ class VerifyApiView(GenericAPIView):
 
 #
 # class LogoutApiView(GenericAPIView):
+
+from wantads.api.serializers import WandAdSerializers
+from wantads.models import WantAd
+
+
+class UserWantListApiView(GenericAPIView):
+    serializer_class = WandAdSerializers
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.serializer_class(instance=request.user.want_ad.all(), many=True, context={'request': request})
+        context = {
+            'is_done': True,
+            'message': ' لیست آگهی های کاربر',
+            'data': serializer.data
+        }
+        return Response(data=context, status=status.HTTP_200_OK)
+
+
+class UserWantRetrieveApiView(GenericAPIView):
+    serializer_class = WandAdSerializers
+
+    def get(self, request, *args, **kwargs):
+        want_id = kwargs.get('id')
+        queryset = WantAd.objects.filter(id=want_id).annotate(hits_count=F('hits__created1')).order_by('hits')
+        serializer = self.serializer_class(instance=queryset, many=True, context={'request': request})
+        context = {
+            'is_done': True,
+            'message': 'جزییات آگهی کاربر',
+            'data': serializer.data
+        }
+        return Response(data=context, status=status.HTTP_200_OK)

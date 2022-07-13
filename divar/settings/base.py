@@ -28,8 +28,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "braces",
     "django_filters",
-    'widget_tweaks',
-
+    "widget_tweaks",
     # custom
     "categories.apps.CategoriesConfig",
     "wantads.apps.WantadsConfig",

@@ -22,3 +22,4 @@ class WantAdBase(BaseModel):
 
     class Meta:
         abstract = True
+        unique_together = ('user', 'want')
