@@ -2,14 +2,18 @@ import jdatetime
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, View
-
+from django.views.generic import ListView, TemplateView, View, CreateView
+from .models import Cost
 from categories.models import Category
 from utils.mixins import AdminAccessMixin
 from wantads.models import WantAd
+from django.urls import reverse_lazy
+from .forms import CostForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 user = get_user_model()
+from django.contrib import messages
 
 
 class PanelView(AdminAccessMixin, View):
@@ -66,4 +70,19 @@ class StaticView(AdminAccessMixin, View):
         return render(request, "config/static.html", context)
 
 
+class CostView(View):
+    def get(self, request, *args, **kwargs):
+        queryset = Cost.objects.first()
+        return render(request, 'config/cost.html', {'info': queryset})
 
+
+class CostSetView(AdminAccessMixin, SuccessMessageMixin, CreateView):
+    model = Cost
+    template_name = 'config/cost_set.html'
+    form_class = CostForm
+    success_url = reverse_lazy('config:cost')
+    success_message = 'نرخ های جدید با موفقیت اعمال شدند'
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'خطا در انجام عکلیات', 'danger')
+        return super(CostSetView, self).form_invalid(form)

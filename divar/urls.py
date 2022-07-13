@@ -9,6 +9,7 @@ urlpatterns = [
     path("category/", include("categories.urls")),
     path("panel/", include("config.urls", namespace="config")),
     path("accounts/", include("accounts.urls", namespace="accounts")),
+    path("ticket/", include("tickets.urls", namespace="ticket")),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,70 @@
+{% extends "base1.html" %}
+{% load widget_tweaks %}
+{% block content %}
+    <main class="main-content">
+        <div class="container">
+
+            <!-- begin::page-header -->
+            <div class="page-header">
+                <h1 class="text-center text-success">لیست تیکت های ثبت شده</h1>
+            </div>
+            <!-- end::page-header -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="get" action="">
+                        <label class="col-form-label col-md-2">{{ filter.form.status.label }}:</label>
+                        {{ filter.form.status|add_class:'col-sm-3 btn ' }}
+                        <label class="col-form-label col-md-2">{{ filter.form.type.label }}:</label>
+                        {{ filter.form.type|add_class:'col-sm-3 ' }}
+                        <input type="submit" class="form-element btn btn-success" value="اعمال فیلتر"/>
+                    </form>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">تیکت های ثبت شده</h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">کد تیکت</th>
+                                        <th scope="col">عنوان</th>
+                                        <th scope="col">دسته بندی</th>
+                                        <th scope="col">وضعیت</th>
+                                        <th scope="col">تاریخ ثبت</th>
+                                        <th scope="col">مشاهده جزییات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ticket in filter.qs %}
+                                        <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ ticket.code }}</td>
+                                        <td>{{ ticket.text }}</td>
+                                        <td>{{ ticket.status }}</td>
+                                        <td>{{ ticket.type }}</td>
+                                        <td>{{ ticket.created }}</td>
+                                        <td><a class="btn btn-info"
+                                               href="{% url "ticket:detail" ticket.pk %}">مشاهده</a></td>
+                                    {% empty %}
+                                        <h1 class="text-center text-danger">تیکتی برای نمایش موجود نمیباشد</h1>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+{% endblock content %}
+
+

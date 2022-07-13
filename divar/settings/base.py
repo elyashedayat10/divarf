@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "wantads.apps.WantadsConfig",
     "accounts.apps.AccountsConfig",
     "config.apps.ConfigConfig",
+    "tickets.apps.TicketsConfig",
 ]
 
 MIDDLEWARE = [

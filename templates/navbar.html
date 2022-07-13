@@ -113,9 +113,17 @@
                                href="{% url "want_ad:special" %}">آگهی های ویژه</a></li>
                         <li><a class="{% if url_name == 'paid' %}active{% endif %}"
                                href="{% url "want_ad:paid" %}">آگهی های غیررایگان</a></li>
-                        <li><a  class="{% if url_name == 'paid' %}active{% endif %}"
-                          href="{% url "want_ad:paying" %}">گزارش مالی</a></li>
+                        <li><a class="{% if url_name == 'paid' %}active{% endif %}"
+                               href="{% url "config:cost" %}">گزارش مالی</a></li>
+                        <li><a href="{% url "config:cost" %}">نرخ آگهی</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a class="{% if url_name == 'list' %}active{% endif %}" href="{% url "ticket:list" %}">
+                        <i class="nav-link-icon" data-feather="check-circle"></i>
+                        <span>Ticket</span>
+                        <span class="badge badge-warning">2</span>
+                    </a>
                 </li>
             </ul>
         </div>
